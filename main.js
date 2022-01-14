@@ -59,6 +59,10 @@ Date.prototype.formatSimple = function() {
     return `${this.getFullYear()}-${('00' + (this.getMonth() + 1)).substr(-2)}-${('00' + this.getDate()).substr(-2)}`;
 };
 
+Object.prototype.clone = function() {
+    return JSON.parse(JSON.stringify(this));
+};
+
 const COLOR_PALETTE = [
     '#F44336',
     '#E91E63',
@@ -129,7 +133,7 @@ const deserialize = function(rawData) {
                         text: subData2[3],
                     };
                 }),
-                newPeriod: JSON.parse(JSON.stringify(NEW_PERIOD)),
+                newPeriod: NEW_PERIOD.clone(),
             };
         }),
     };
@@ -242,7 +246,7 @@ let app = {
         },
         addEvent() {
             if (this.newEvent.color && this.newEvent.text && this.newEvent.date) {
-                this.events.push(this.newEvent);
+                this.events.push(this.newEvent.clone());
             }
         },
         deleteView(viewIndex) {
@@ -252,7 +256,7 @@ let app = {
             this.views.push({
                 name: 'New View',
                 periods: [],
-                newPeriod: JSON.parse(JSON.stringify(NEW_PERIOD)),
+                newPeriod: NEW_PERIOD.clone(),
             });
         },
         deletePeriod(viewIndex, periodIndex) {
@@ -260,7 +264,7 @@ let app = {
         },
         addPeriod(viewIndex) {
             if (this.views[viewIndex].newPeriod.color && this.views[viewIndex].newPeriod.text && this.views[viewIndex].newPeriod.startDate) {
-                this.views[viewIndex].periods.push(this.views[viewIndex].newPeriod);
+                this.views[viewIndex].periods.push(this.views[viewIndex].newPeriod.clone());
                 this.views[viewIndex].newPeriod.startDate = this.views[viewIndex].newPeriod.endDate;
                 this.views[viewIndex].newPeriod.endDate = '';
             }

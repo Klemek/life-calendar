@@ -129,7 +129,7 @@ const deserialize = function(rawData) {
                         text: subData2[3],
                     };
                 }),
-                newPeriod: NEW_PERIOD,
+                newPeriod: JSON.parse(JSON.stringify(NEW_PERIOD)),
             };
         }),
     };
@@ -204,7 +204,7 @@ let app = {
             let text = `${date.getFullYear()} (Week ${date.getWeek()})<br>Age: ${row}`;
             const views = this.getViews(row, col);
             for (const view in views) {
-                text += `<br>${view}: ${views[view].text}`; //TODO percent
+                text += `<br>${view}: ${views[view].text} (${views[view].percent})`;
             }
             this.getEvents(row, col).forEach(event => {
                 text += `<br>- ${new Date(event.date).formatSimple()}: ${event.text}`;
@@ -252,7 +252,7 @@ let app = {
             this.views.push({
                 name: 'New View',
                 periods: [],
-                newPeriod: NEW_PERIOD,
+                newPeriod: JSON.parse(JSON.stringify(NEW_PERIOD)),
             });
         },
         deletePeriod(viewIndex, periodIndex) {
@@ -271,6 +271,19 @@ let app = {
             this.views = [];
             this.$force;
         },
+        updateStatistics() {
+            const total = (new Date() - this.birthdate);
+            this.views.forEach(view => {
+                console.log(view);
+                const data = {};
+                view.periods.forEach(period => {
+                    data[period.text + period.color] = (data[period.text + period.color] ?? 0) + ((period.endDate ? new Date(period.endDate) : new Date()) - (new Date(period.startDate)));
+                });
+                view.periods.forEach(period => {
+                    period.percent = `${(100 * data[period.text + period.color] / total).toFixed(3)}%`;
+                });
+            });
+        },
     },
     beforeMount() {
         this.life = Array(90).fill(Array(52));
@@ -288,9 +301,13 @@ let app = {
             this.events = data.events;
             this.views = data.views;
         }
+        this.updateStatistics();
     },
     mounted() {
         setTimeout(this.showApp);
+    },
+    beforeUpdate() {
+        this.updateStatistics();
     },
     updated() {
         const data = serialize(this.birtdate, this.view, this.events, this.views);

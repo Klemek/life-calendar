@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Life Calendar</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="libs/vue.global.js"></script>
+    <script type="text/javascript" src="libs/lz-string.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- card related -->
+    <!--
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:title" content="">
+    <meta property="twitter:title" content="">
+    <meta property="og:description" content="">
+    <meta property="twitter:description" content="">
+    <meta property="og:image" content="https://.../preview_640x320.jpg">
+    <meta property="twitter:image" content="">
+    <meta property="org:url" content="https://...">
+    -->
+</head>
+<body>
+    <main id="app" style="display:none;">
+        <h1>Life Calendar in weeks</h1>
+        View:&nbsp;<select v-model="view">
+            <option value="">Events</option>
+            <option v-for="view in views" v-bind:value="view.name">{{view.name}}</option>
+        </select>
+        <br>
+        <br>
+        <table class="life">
+            <tr v-for="(year, row) in life">
+                <td v-for="(week, col) in year" class="week tooltip" v-bind:style="getStyle(row, col)"><span class="tooltiptext" v-html="getTooltip(row, col)" /></td>
+            </tr>
+        </table>
+        <br>
+        <hr>
+        <div>
+            <h2>Config</h2>
+            <table class="config">
+                <tr>
+                    <td>Birthdate:</td>
+                    <td><input type="date" v-model="birth"></td>
+                    <td><button v-on:click="reset">Reset all data</button></td>
+                </tr>
+            </table>
+            <h3>Events:</h3>
+            <table class="config">
+                <tr v-for="(event, i) in events">
+                    <td><input type="checkbox" v-model="event.display"></td>
+                    <td><input type="date" v-model="event.date"></td>
+                    <td><input v-model="event.text"></td>
+                    <td><select-color v-model="event.color"></select-color></td>
+                    <td><button v-on:click="deleteEvent(i)">Delete</button></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" checked disabled></td>
+                    <td><input type="date" v-model="newEvent.date"></td>
+                    <td><input v-model="newEvent.text"></td>
+                    <td><select-color v-model="newEvent.color"></select-color></td>
+                    <td><button v-on:click="addEvent">Add</button></td>
+                </tr>
+            </table>
+            <h3>Views:</h3>
+            <table class="config">
+                <tbody v-for="(view, viewIndex) in views">
+                    <tr>
+                        <th colspan="5"><input style="width:100%" v-model="view.name"></th>
+                        <th><button v-on:click="deleteView(viewIndex)">Delete</button></th>
+                    </tr>
+                    <tr v-for="(period, periodIndex) in view.periods">
+                        <td>•</td>
+                        <td><input type="date" v-model="period.startDate"></td>
+                        <td><input type="date" v-model="period.endDate"></td>
+                        <td><input v-model="period.text"></td>
+                        <td><select-color v-model="period.color"></select-color></td>
+                        <td><button v-on:click="deletePeriod(viewIndex, periodIndex)">Delete</button></td>
+                    </tr>
+                    <tr>
+                        <td>•</td>
+                        <td><input type="date" v-model="view.newPeriod.startDate"></td>
+                        <td><input type="date" v-model="view.newPeriod.endDate"></td>
+                        <td><input v-model="view.newPeriod.text"></td>
+                        <td><select-color v-model="view.newPeriod.color"></select-color></td>
+                        <td><button v-on:click="addPeriod(viewIndex)">Add</button></td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <th colspan="6"><button style="width:100%" v-on:click="addView">Add</button></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <hr>
+        <small><a href="https://twitter.com/_klemek" target="_blank">@Klemek</a> - <a href="" target="_blank">Github Repository</a> - 2022</small>
+    </main>
+</body>
+</html>

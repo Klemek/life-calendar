@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+    font-family: Verdana, serif;
+    color: #424242;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    max-width: 120%;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+main {
+    padding: 1.5rem;
+    margin: auto;
+    background-color: #EEEEEE;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+h1 {
+    margin-bottom: .5em;
+}
+
+table.life {
+    margin:-1.5rem;
+    table-layout: fixed;
+}
+
+td.week{
+    margin:3px;
+    width:12px;
+    height: calc(100vw/52 - 2px);
+    padding:0;
+    border: 1px solid #424242;
+}
+
+table.config{
+    border-collapse: collapse;
+}
+
+table.config td{
+    padding:.2em;
+}
+
+table.config td button{
+    width:100%;
+}
+
+@media only screen and (min-width: 768px) {
+    main {
+        max-width: 48rem;
+        overflow: visible;
+    }
+    table.life{
+        margin: auto;
+    }
+    td.week{
+        height: 12px;
+    }
+}
+
+.select-color {
+    width:100px;
+    color: white;
+}
+
+.select-color option {
+    color: white;
+}
+
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #424242;
+    padding: 5px;
+    text-align: left;
+    font-size: .5em;
+    border-radius: 0 6px 6px 6px;
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+    top: 105%;
+    opacity: 0;
+    display: table;
+    width: fit-content; 
+    transition: opacity .5s;
+    white-space: nowrap;
+    color: #fff;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

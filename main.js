@@ -59,8 +59,8 @@ Date.prototype.formatSimple = function() {
     return `${this.getFullYear()}-${('00' + (this.getMonth() + 1)).substr(-2)}-${('00' + this.getDate()).substr(-2)}`;
 };
 
-Object.prototype.clone = function() {
-    return JSON.parse(JSON.stringify(this));
+const cloneObject = function(obj) {
+    return JSON.parse(JSON.stringify(obj));
 };
 
 const COLOR_PALETTE = [
@@ -133,7 +133,7 @@ const deserialize = function(rawData) {
                         text: subData2[3],
                     };
                 }),
-                newPeriod: NEW_PERIOD.clone(),
+                newPeriod: cloneObject(NEW_PERIOD),
             };
         }),
     };
@@ -246,7 +246,7 @@ let app = {
         },
         addEvent() {
             if (this.newEvent.color && this.newEvent.text && this.newEvent.date) {
-                this.events.push(this.newEvent.clone());
+                this.events.push(cloneObject(this.newEvent));
             }
         },
         deleteView(viewIndex) {
@@ -256,7 +256,7 @@ let app = {
             this.views.push({
                 name: 'New View',
                 periods: [],
-                newPeriod: NEW_PERIOD.clone(),
+                newPeriod: cloneObject(NEW_PERIOD),
             });
         },
         deletePeriod(viewIndex, periodIndex) {
@@ -264,7 +264,7 @@ let app = {
         },
         addPeriod(viewIndex) {
             if (this.views[viewIndex].newPeriod.color && this.views[viewIndex].newPeriod.text && this.views[viewIndex].newPeriod.startDate) {
-                this.views[viewIndex].periods.push(this.views[viewIndex].newPeriod.clone());
+                this.views[viewIndex].periods.push(cloneObject(this.views[viewIndex].newPeriod));
                 this.views[viewIndex].newPeriod.startDate = this.views[viewIndex].newPeriod.endDate;
                 this.views[viewIndex].newPeriod.endDate = '';
             }
@@ -284,7 +284,7 @@ let app = {
                     data[period.text + period.color] = (data[period.text + period.color] ?? 0) + ((period.endDate ? new Date(period.endDate) : new Date()) - (new Date(period.startDate)));
                 });
                 view.periods.forEach(period => {
-                    period.percent = `${(data[period.text + period.color]/(7 * 24 * 60 * 60 * 1000)).toFixed(0)}w, ${(100 * data[period.text + period.color] / total).toFixed(2)}%`;
+                    period.percent = `${(data[period.text + period.color] / (7 * 24 * 60 * 60 * 1000)).toFixed(0)}w, ${(100 * data[period.text + period.color] / total).toFixed(2)}%`;
                 });
             });
         },

@@ -48,7 +48,7 @@
             <table class="config">
                 <tr>
                     <td>Birthdate:</td>
-                    <td><input type="date" v-model="birth"></td>
+                    <td><input type="date" v-bind:value="birth" v-on:change="birth = $event.target.value"></td>
                     <td><button v-on:click="reset">Reset all data</button></td>
                 </tr>
             </table>
@@ -56,15 +56,15 @@
             <table class="config">
                 <tr v-for="(event, i) in events">
                     <td><input type="checkbox" v-model="event.display"></td>
-                    <td><input type="date" v-model="event.date"></td>
-                    <td><input v-model="event.text"></td>
+                    <td><input type="date" v-bind:value="event.date" v-on:change="event.date = $event.target.value"></td>
+                    <td><input v-bind:value="event.text" v-on:change="event.text = $event.target.value"></td>
                     <td><select-color v-model="event.color"></select-color></td>
                     <td><button v-on:click="deleteEvent(i)">Delete</button></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox" checked disabled></td>
-                    <td><input type="date" v-model="newEvent.date"></td>
-                    <td><input v-model="newEvent.text"></td>
+                    <td><input type="date" v-bind:value="newEvent.date" v-on:change="newEvent.date = $event.target.value"></td>
+                    <td><input v-bind:value="newEvent.text" v-on:change="newEvent.text = $event.target.value"></td>
                     <td><select-color v-model="newEvent.color"></select-color></td>
                     <td><button v-on:click="addEvent">Add</button></td>
                 </tr>
@@ -73,22 +73,22 @@
             <table class="config">
                 <tbody v-for="(view, viewIndex) in views">
                     <tr>
-                        <th colspan="5"><input style="width:100%" v-model="view.name"></th>
+                        <th colspan="5"><input style="width:100%" v-bind:value="view.name" v-on:change="view.name = $event.target.value"></th>
                         <th><button v-on:click="deleteView(viewIndex)">Delete</button></th>
                     </tr>
                     <tr v-for="(period, periodIndex) in view.periods">
                         <td>•</td>
-                        <td><input type="date" v-model="period.startDate"></td>
-                        <td><input type="date" v-model="period.endDate"></td>
-                        <td><input v-model="period.text"></td>
+                        <td><input type="date" v-bind:value="period.startDate" v-on:change="period.startDate = $event.target.value"></td>
+                        <td><input type="date" v-bind:value="period.endDate" v-on:change="period.endDate = $event.target.value"></td>
+                        <td><input v-bind:value="period.text" v-on:change="period.text = $event.target.value"></td>
                         <td><select-color v-model="period.color"></select-color></td>
                         <td><button v-on:click="deletePeriod(viewIndex, periodIndex)">Delete</button></td>
                     </tr>
                     <tr>
                         <td>•</td>
-                        <td><input type="date" v-model="view.newPeriod.startDate"></td>
-                        <td><input type="date" v-model="view.newPeriod.endDate"></td>
-                        <td><input v-model="view.newPeriod.text"></td>
+                        <td><input type="date" v-bind:value="view.newPeriod.startDate" v-on:change="view.newPeriod.startDate = $event.target.value"></td>
+                        <td><input type="date" v-bind:value="view.newPeriod.endDate" v-on:change="view.newPeriod.endDate = $event.target.value"></td>
+                        <td><input v-bind:value="view.newPeriod.text" v-on:change="view.newPeriod.text = $event.target.value"></td>
                         <td><select-color v-model="view.newPeriod.color"></select-color></td>
                         <td><button v-on:click="addPeriod(viewIndex)">Add</button></td>
                     </tr>

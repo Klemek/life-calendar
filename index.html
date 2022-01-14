@@ -9,25 +9,32 @@
     <script type="text/javascript" src="main.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- card related -->
-    <!--
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="og:title" content="">
-    <meta property="twitter:title" content="">
-    <meta property="og:description" content="">
-    <meta property="twitter:description" content="">
-    <meta property="og:image" content="https://.../preview_640x320.jpg">
-    <meta property="twitter:image" content="">
-    <meta property="org:url" content="https://...">
-    -->
+    <meta property="og:title" content="Life Calendar">
+    <meta property="twitter:title" content="Life Calendar">
+    <meta property="og:description" content="See your life in weeks">
+    <meta property="twitter:description" content="See your life in weeks">
+    <meta property="og:image" content="https://klemek.github.io/life-calendar/preview_640x320.jpg">
+    <meta property="twitter:image" content="https://klemek.github.io/life-calendar/preview_640x320.jpg">
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="640"/>
+    <meta property="og:image:height" content="320"/>
+    <meta property="org:url" content="https://klemek.github.io/life-calendar/">
 </head>
 <body>
     <main id="app" style="display:none;">
-        <h1>Life Calendar in weeks</h1>
-        View:&nbsp;<select v-model="view">
-            <option value="">Events</option>
-            <option v-for="view in views" v-bind:value="view.name">{{view.name}}</option>
-        </select>
-        <br>
+        <h1>Life Calendar<br><small><small>See your life in weeks</small></small></h1>
+        <table class="config">
+            <tr>
+                <td>View:</td>
+                <td>
+                    <select v-model="view">
+                        <option value="">Events</option>
+                        <option v-for="view in views" v-bind:value="view.name">{{view.name}}</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
         <br>
         <table class="life">
             <tr v-for="(year, row) in life">
@@ -95,7 +102,7 @@
         </div>
         <br>
         <hr>
-        <small><a href="https://twitter.com/_klemek" target="_blank">@Klemek</a> - <a href="" target="_blank">Github Repository</a> - 2022</small>
+        <small><a href="https://twitter.com/_klemek" target="_blank">@Klemek</a> - <a href="https://github.com/Klemek/life-calendar" target="_blank">Github Repository</a> - 2022</small>
     </main>
 </body>
 </html>

@@ -284,7 +284,7 @@ let app = {
                     data[period.text + period.color] = (data[period.text + period.color] ?? 0) + ((period.endDate ? new Date(period.endDate) : new Date()) - (new Date(period.startDate)));
                 });
                 view.periods.forEach(period => {
-                    period.percent = `${(100 * data[period.text + period.color] / total).toFixed(3)}%`;
+                    period.percent = `${(data[period.text + period.color]/(7 * 24 * 60 * 60 * 1000)).toFixed(0)}w, ${(100 * data[period.text + period.color] / total).toFixed(2)}%`;
                 });
             });
         },
